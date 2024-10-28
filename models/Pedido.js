@@ -11,7 +11,15 @@ const Pedido = sequelize.define('Pedido', {
   data_compra: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.NOW, // Define a data atual como padrão
+    defaultValue: Sequelize.NOW,
+  },
+  cliente_id: {  
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Cliente,
+      key: 'cliente_id',
+    },
   },
 });
 

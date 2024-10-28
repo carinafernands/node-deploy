@@ -9,6 +9,22 @@ const DetalhePedido = sequelize.define('DetalhePedido', {
     autoIncrement: true,
     primaryKey: true,
   },
+  dt_pedido_id: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Pedido,
+      key: 'pedido_id',
+    },
+  },
+  dt_produto_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Produto,
+      key: 'produto_id',
+    },
+  },
   dt_valor: {
     type: DataTypes.FLOAT,
     allowNull: false,

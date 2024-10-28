@@ -2,7 +2,7 @@
 const Pedido = require('../models/Pedido');
 
 exports.createPedido = async (req, res) => {
-  const { cliente_id, data_compra } = req.body;
+  const { cliente_id } = req.body;
 
   try {
     const pedido = await Pedido.create({ cliente_id });

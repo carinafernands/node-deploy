@@ -52,3 +52,27 @@ exports.deleteDetalhePedido = async (req, res) => {
   }
 };
 
+exports.listarDetalhesPedidos = async (req, res) => {
+  try {
+    const detalhes = await DetalhePedido.findAll();
+    res.status(200).json(detalhes);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao listar detalhes do pedido' });
+  }
+};
+
+exports.getDetalhePedido = async (req, res) => {
+  const { dt_id } = req.params;
+
+  try {
+    const detalhe = await DetalhePedido.findByPk(dt_id);
+    if (!detalhe) {
+      return res.status(404).json({ error: 'Detalhe do pedido não encontrado' });
+    }
+    res.json(detalhe);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar detalhe do pedido' });
+  }
+};
+
+

@@ -1,4 +1,5 @@
 const Usuario = require('../models/Usuario');
+const UsuarioDTO = require('../models/dtos/UsuarioDTO');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -15,7 +16,8 @@ exports.createUsuario = async (req, res) => {
 
   try {
     const usuario = await Usuario.create({ usuario_login, usuario_senha: hashedSenha });
-    res.status(201).json(usuario);
+    const usuariosDTO = new UsuarioDTO(usuario)
+    res.status(201).json(usuariosDTO);
   } catch (err) {
     res.status(500).json({ error: 'Erro ao criar usuário' });
   }
@@ -36,7 +38,8 @@ exports.loginUsuario = async (req, res) => {
     }
 
     const token = generateToken(usuario);
-    res.json({ usuario, token });
+    const usuariosDTO = new UsuarioDTO(usuario)
+    res.json({ usuariosDTO, token });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao fazer login' });
   }
@@ -45,7 +48,8 @@ exports.loginUsuario = async (req, res) => {
 exports.listarUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.findAll();
-    res.status(200).json(usuarios);
+    const usuariosDTO = usuarios.map(usuario => new UsuarioDTO(usuario))
+    res.status(200).json(usuariosDTO);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao consultar usuários' });
   }
